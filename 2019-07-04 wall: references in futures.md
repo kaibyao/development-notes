@@ -1,0 +1,15 @@
+# Hit another wall: Using `&mut self` in a future.
+
+Was stuck for a good portion of my time on why references couldn’t be used in futures. Turns out that at least with pre-async-await, futures 0.1 have to be `'static` (due to `tokio` requirements), which doesn't play well with any non-static reference (like `&mut self`).
+
+The solution to this usually involves `Arc`, optionally paired with `Mutex` or `RwLock` if mutability is desired.
+
+Another new Rust-ism that I've learned today. My opinion of Rust is that it’s awesome when my stuff finally compiles, but getting there often feels like running into walls until I stumble into an obscure StackOverflow answer (though I have to say that shepmaster’s answers are pretty high quality) or rust-lang post that explains the problem and solution in the correct sequence of phrases that I suddenly have that "Aha!" moment.
+
+It’s not a language that I think I can confidently introduce to a team at work, at least not if they come from a front-end background. I can see a lot of front-end engineers not wanting to directly interact and think about memory in the way that Rust forces you to. Thankfully those few semesters of CS courses that I took in college have at least solidified how computer memory works, which has helped my own learning of the language, as so much of its hurdles revolves around memory allocation and release.
+
+Front-end programmers often learn from trying to code, then running their code, and then seeing where the code fails. It's a fairly interactive learning process; they can try to approach a problem in multiple ways, trying different things, and seeing how their results encounter the same (or different) failure before eventually arriving at a solution, even if it is barely working (works only on the happy path, lots of race conditions, etc).
+
+Rust on the other hand, does not have the same kind of feedback system. It frontloads those failures through the compiler, and it won’t be satisfied with a barely-working solution. Issues with lifetimes exist in both languages, but where a failure in JS might end up with an undefined variable somewhere, Rust will just not compile. This is both awesome and frustrating at the same time. In order to get my code to compile, I have to understand much more than just what I am trying to do; I have to understand how the computer will store/use my variables in memory. The language forces me to understand how the computer works rather than abstracting that away.
+
+I think that if someone can get past these hurdles however, the benefits of the language still outweigh the frustrating learning process. I'm confident that a program written in Rust will have less bugs than the same program written in another language. Not having to deal with bug tickets is quite a valuable boon to development teams and business as a whole.
