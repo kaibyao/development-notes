@@ -34,49 +34,11 @@ fn change(b: &mut B) {
     };
 }
 
-fn changeuse std::borrow::BorrowMut;
-use std::mem::replace;
-
-struct A {
-    child: Option<Box<B>>,
-}
-
-enum B {
-    A(A),
-    B,
-}
-
-fn change(b: &mut B) {
-    let mut temp_b = replace(b, B::B);
-    match &mut temp_b {
-        B::A(a) => {
-            change_inner(b, a);
-            *b = temp_b;
-        }
-        B::B => (),
-    };
-}
-
 fn change_inner(b: &mut B, a: &mut A) {
     match &mut a.child {
         Some(b_box) => {
             change(b_box.borrow_mut());
         }
-        None => {
-            *b = B::B;
-        }
-    };
-}
-
-fn main() {
-    let mut s1 = B::A(A { child: None });
-
-    change(&mut s1);
-}_inner(b: &mut B, a: &mut A) {
-    match &mut a.child {
-        Some(b_box) => {
-            change(b_box.borrow_mut());
-        },
         None => {
             *b = B::B;
         }
