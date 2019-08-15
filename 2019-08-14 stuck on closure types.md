@@ -65,3 +65,31 @@ error[E0282]: type annotations needed for `A<S, tokio_postgres::tls::NoTls, [clo
 ```
 
 Now I need to research how to use the correct syntax to proceed with the suggestion in the compiler error.
+
+**EDIT**: Yay for type inference! This compiles:
+
+```rust
+use std::marker::PhantomData;
+use tokio_postgres::{
+    tls::{MakeTlsConnect, NoTlsStream},
+    NoTls,
+};
+
+struct A<S, T, F>
+where
+    T: MakeTlsConnect<S> + Clone + Send + Sync,
+    F: Fn() -> T,
+{
+    tls: F,
+    sp: PhantomData<S>,
+}
+
+fn main() {
+    let test: A<NoTlsStream, NoTls, _> = A {
+        tls: || NoTls,
+        sp: PhantomData,
+    };
+}
+```
+
+Now I need to figure out how I can call `test.tls`, as `test.tls()` gives me a `No method named `tls` found for type A` compiler error.
