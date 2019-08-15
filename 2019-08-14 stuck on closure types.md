@@ -93,3 +93,35 @@ fn main() {
 ```
 
 Now I need to figure out how I can call `test.tls`, as `test.tls()` gives me a `No method named `tls` found for type A` compiler error.
+
+EDIT: Found this gem that gave me the info I needed: https://github.com/rust-lang/rust/issues/18343
+
+This compiles and runs:
+
+```rust
+use std::marker::PhantomData;
+use tokio_postgres::{
+    tls::{MakeTlsConnect, NoTlsStream},
+    NoTls,
+};
+
+struct A<S, T, F>
+where
+    T: MakeTlsConnect<S> + Clone + Send + Sync,
+    F: Fn() -> T,
+{
+    tls: F,
+    sp: PhantomData<S>,
+}
+
+fn main() {
+    let test: A<NoTlsStream, NoTls, _> = A {
+        tls: || NoTls,
+        sp: PhantomData,
+    };
+
+    dbg!((test.tls)());
+    // prints:
+    // [src/main.rs:22] (test.tls)() = NoTls
+}
+```
