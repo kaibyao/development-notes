@@ -1,4 +1,5 @@
-As rust-postgres-rest is getting finished, I have one last major hurdle to tackle before I can make a preliminary release, and that is how to allow the creation of a TLS socket via `Config`.
+As rust-postgres-rest is getting finished, I have one last major hurdle to tackle before I can make a preliminary release,
+and that is how to allow the creation of a TLS socket via `Config`.
 
 Ideally I'd like either:
 1. The user can pass their own TLS connection to `Config`, where it is cloned/used on every database connection made.
