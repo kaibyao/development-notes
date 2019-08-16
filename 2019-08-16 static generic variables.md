@@ -4,7 +4,7 @@ Another new thing that stumped me as I continue trying to get TLS functionality 
 use actix::Addr;
 use tokio_postgres::{tls::MakeTlsConnect, Socket};
 use crate::Config;
-use std::sync::Mutex;
+use std::sync::{atomic::AtomicBool, Mutex};
 
 /// Contains the Table Stats cache.
 pub(crate) struct StatsCache<T: MakeTlsConnect<Socket> + Clone + Send + Sync + 'static> {
@@ -38,5 +38,7 @@ Apparently you can't declare generic static variables. According to Fenrir on th
 > Generics create a new version of a struct for each type they're instantiated with,
 > which conflicts with the idea of a single static item
 
-So either I'd have to declare it with a concrete type, or I'd have to find another way to store a cache,
-or I'd have to eliminate the need for a generic.
+So either I'd have to:
+1. declare it with a concrete type, or
+1. I'd have to find another way to store a cache, or
+1. I'd have to eliminate the need for a generic.
