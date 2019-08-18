@@ -60,7 +60,17 @@ services:
 
 ## Attempt to connect to the database using `psql` (with TLS)
 
+From the root folder of `rust-postgres-rest`:
+
+```bash
+$ psql "host=localhost port=5433 user=postgres password=example dbname=postgres sslmode=verify-full sslrootcert=./rust-postgres-rest/tests/server.crt sslkey=./rust-postgres-rest/tests/server.key"
+```
+
+## Set up the same config in `rust-postgres-rest` tests
+
 Had to look at both the `server.key` file and the `server.crt` file and concatenate the following to make the `server.pem` file:
 
 - The contents of `server.key` (`BEGIN PRIVATE KEY`).
 - The certificate portion of `server.crt` (`BEGIN CERTIFICATE`).
+
+
