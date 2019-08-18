@@ -40,5 +40,7 @@ Apparently you can't declare generic static variables. According to Fenrir on th
 
 So either I'd have to:
 1. declare it with a concrete type, or
-1. I'd have to find another way to store a cache, or
-1. I'd have to eliminate the need for a generic.
+1. find another way to store a cache, or
+1. eliminate the need for a generic.
+
+UPDATE: I ended up going with #3. This required me to move the non-generic part that I needed from `Config` out of `Config` in the `StatsCache` struct.
