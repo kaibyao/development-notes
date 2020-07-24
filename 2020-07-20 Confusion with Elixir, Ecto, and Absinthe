@@ -1,0 +1,11 @@
+elixir/phoenix/absinthe uses web/schema and web/resolvers to describe the graphQL schema/types and resolution functions, respectively.
+
+Thing is, that was confusing as hell for me, because there was nothing in the tutorials that reinforced these practices. Seems like someone on the internet came up w/ that. I think it makes it hard for newcomers to understand.
+
+I'd rather put both the schema of an endpoint in the same module as its resolution function (I'm fine w/ calling it a resolver btw).
+
+Also, we're supposed to name our graphQL schema file as schema.ex, but it's confusing for someone new because our Ecto DB schema files are also called "Schema". The fact that we call our graphQL schema as "schema.ex" yet it's separate from (but related to) the DB makes it easy to confuse the DB schema with the GraphQL schema, when they are unrelated entities (naming is hard).
+
+Doesn't easily tell you how to change the shape of the data returned so that it matches the graphQL schema. Gonna try a more complex joined query via Ecto and see if returning that gets me the correct data.
+
+turns out you have to build the shape of the graphql object yourself using a DB query + map.
