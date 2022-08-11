@@ -7,6 +7,7 @@ No, seriously. It does. Here's a list of the major ones:
 3. CLI command to start a built-in webserver so that you don't have to code one yourself with DB connections.
 4. You can start developing your app at the URL routing step, not the code-your-web-server step.
 5. Can "live-debug" via running elixir code on your running application via `iex -S mix phx.server`.
+6. OTP / Actors / message-passing is a really awesome thing to have built into the standard library.
 
 All in all, going from reading tutorials to building out an app happens very quickly. So why am I deciding to switch? Two reasons:
 
